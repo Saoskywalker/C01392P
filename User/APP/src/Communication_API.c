@@ -1,7 +1,7 @@
 #include "GCE_General.h"
 
-GCE_XDATA  UI08   Communication_Count_Timer=160;//Í¨ÐÅ¹ÊÕÏ±¨¾¯
-GCE_XDATA  UI08   Communication_Delay_Txd_Timer=0; //½ÓÊÕµ½Êý¾ÝºóÑÓÊ±Ò»¶ÎÊ±¼äºóÔÙ·¢ËÍÊý¾Ý
+GCE_XDATA UI08 Communication_Count_Timer = 160;   //Í¨ÐÅ¹ÊÕÏ±¨¾¯
+GCE_XDATA UI08 Communication_Delay_Txd_Timer = 0; //½ÓÊÕµ½Êý¾ÝºóÑÓÊ±Ò»¶ÎÊ±¼äºóÔÙ·¢ËÍÊý¾Ý
 /*****************************************************************************
 //Ãû³Æ        : prg_ms10_Comm
 //¹¦ÄÜ        : 1msÊ±¼äÆ¬
@@ -12,19 +12,20 @@ GCE_XDATA  UI08   Communication_Delay_Txd_Timer=0; //½ÓÊÕµ½Êý¾ÝºóÑÓÊ±Ò»¶ÎÊ±¼äºóÔ
 *****************************************************************************/
 void Prg_Communication_10mS(void)
 {
-  if(!_10ms_for_Com)
-  {return;}
-  _10ms_for_Com=0;
-  //
-  if(Communication_Delay_Txd_Timer>0)
-  {
-      Communication_Delay_Txd_Timer--;
-      if(0==Communication_Delay_Txd_Timer)
-      {
-         _txd_tick_en=1;
-      }
-  }
-
+    if (!_10ms_for_Com)
+    {
+        return;
+    }
+    _10ms_for_Com = 0;
+    //
+    if (Communication_Delay_Txd_Timer > 0)
+    {
+        Communication_Delay_Txd_Timer--;
+        if (0 == Communication_Delay_Txd_Timer)
+        {
+            _txd_tick_en = 1;
+        }
+    }
 }
 /*****************************************************************************
 //Ãû³Æ        : prg_ms1_Comm
@@ -36,18 +37,20 @@ void Prg_Communication_10mS(void)
 *****************************************************************************/
 void Prg_Communication_1S(void)
 {
-  if(!_1S_for_Com)
-  {return;}
-  _1S_for_Com=0;
-  //
-  if(Communication_Count_Timer>0)
-  {
-      Communication_Count_Timer--;
-      if(0==Communication_Count_Timer)
-      {
-         _Power_Status=0;
-      }
-  }
+    if (!_1S_for_Com)
+    {
+        return;
+    }
+    _1S_for_Com = 0;
+    //
+    if (Communication_Count_Timer > 0)
+    {
+        Communication_Count_Timer--;
+        if (0 == Communication_Count_Timer)
+        {
+            _Power_Status = 0;
+        }
+    }
 }
 /*************************************************
 //Ãû³Æ        :	void  crc_check(void)
@@ -57,28 +60,28 @@ void Prg_Communication_1S(void)
 //¹¹	½¨: 	GCE XXX
 //ÐÞ	¸Ä: 	GCE XXX
 **************************************************/
-UI08 crc_check(UI08 *buffer ,UI08 length)
+UI08 crc_check(UI08 *buffer, UI08 length)
 {
-  UI08 crc = 0;
-  UI08 loop=0;
-  UI08 loop_1=0;
-  for(loop = 0; loop < length; loop++)
-  {
-     crc ^= buffer[loop];
-     for(loop_1 = 0; loop_1 < 8; loop_1++)
-     {
-      if((crc & 1) == 1)
-      {
-        crc = crc >> 1;
-        crc ^= 0x8C;
-      }
-      else
-      {
-         crc = crc >> 1;
-      }
-     }
-  }
-  return crc;
+    UI08 crc = 0;
+    UI08 loop = 0;
+    UI08 loop_1 = 0;
+    for (loop = 0; loop < length; loop++)
+    {
+        crc ^= buffer[loop];
+        for (loop_1 = 0; loop_1 < 8; loop_1++)
+        {
+            if ((crc & 1) == 1)
+            {
+                crc = crc >> 1;
+                crc ^= 0x8C;
+            }
+            else
+            {
+                crc = crc >> 1;
+            }
+        }
+    }
+    return crc;
 }
 /*****************************************************************************
 //Ãû³Æ        : rxd_data_protocl
@@ -91,29 +94,29 @@ UI08 crc_check(UI08 *buffer ,UI08 length)
 void Rxd_Data_Protocl(void)
 {
     UUI08 buf_bit;
-    UI08  buf=0;
+    UI08 buf = 0;
     //
-     buf_bit.byte=rxd_buf[1];
-    _Power_Status=buf_bit.bit_.b0;
-    _COMP_Status=buf_bit.bit_.b1;
-    _Sleep_status_buf=buf_bit.bit_.b2;
-    _Self_Test=buf_bit.bit_.b3;
-    _SWING_Status=buf_bit.bit_.b6;
-    _UVC_Status=buf_bit.bit_.b7;
+    buf_bit.byte = rxd_buf[1];
+    _Power_Status = buf_bit.bit_.b0;
+    _COMP_Status = buf_bit.bit_.b1;
+    _Sleep_status_buf = buf_bit.bit_.b2;
+    _Self_Test = buf_bit.bit_.b3;
+    _SWING_Status = buf_bit.bit_.b6;
+    _UVC_Status = buf_bit.bit_.b7;
 
     //°ÚÒ¶
-    buf=((buf_bit.byte>>4)&0x03);//È¡bit4 bit5Êý¾Ý
-    EXV_SWING_Mode=(Swing_Mode)(buf);
+    buf = ((buf_bit.byte >> 4) & 0x03); //È¡bit4 bit5Êý¾Ý
+    EXV_SWING_Mode = (Swing_Mode)(buf);
     //
-    Fan_PWM=rxd_buf[3];// µÍ8bit
+    Fan_PWM = rxd_buf[3]; // µÍ8bit
 
-    if(rxd_buf[2]&bit7)
+    if (rxd_buf[2] & bit7)
     {
-        _Fan15V_Power_Status=1;
+        _Fan15V_Power_Status = 1;
     }
     else
     {
-        _Fan15V_Power_Status=0;
+        _Fan15V_Power_Status = 0;
     }
 }
 /*****************************************************************************
@@ -126,62 +129,62 @@ void Rxd_Data_Protocl(void)
 *****************************************************************************/
 void Txd_Data_Protocol(void)
 {
-     UI08  buf={0};
-     UUI08 buf_bit={0};
+    UI08 buf = {0};
+    UUI08 buf_bit = {0};
     //==============================================================
     //==================  »Ø¸´Êý¾Ý×°ÔØ
     //==============================================================
-     //
-     txd_buf[0]=0xaa;
+    //
+    txd_buf[0] = 0xaa;
 
-     buf_bit.byte=0;
-     //ÂúË®×´Ì¬
-     if(Water_Status.IO_Status)
-     {
-         buf_bit.bit_.b0=1;
-     }
+    buf_bit.byte = 0;
+    //ÂúË®×´Ì¬
+    if (Water_Status.IO_Status)
+    {
+        buf_bit.bit_.b0 = 1;
+    }
 
-     //Ë¯Ãß×´Ì¬
-     if(Water_Status.IO_Status)
-     {
-         buf_bit.bit_.b1=0;
-     }
-     else          
-     {
-         buf_bit.bit_.b1=_Sleep_status_buf;
-     }
+    //Ë¯Ãß×´Ì¬
+    if (Water_Status.IO_Status)
+    {
+        buf_bit.bit_.b1 = 0;
+    }
+    else
+    {
+        buf_bit.bit_.b1 = _Sleep_status_buf;
+    }
 
-     buf_bit.byte|=((Version<<4)&0xf0);
-     //
-     txd_buf[1]=buf_bit.byte;
+    buf_bit.byte |= ((Version << 4) & 0xf0);
+    //
+    txd_buf[1] = buf_bit.byte;
 
-     buf_bit.byte=0;
-     //¹ÜÎÂAD
-     buf=((Tcoil_AD_value>>8)&0x03);
-     buf_bit.byte|=buf;
+    buf_bit.byte = 0;
+    //¹ÜÎÂAD
+    buf = ((Tcoil_AD_value >> 8) & 0x03);
+    buf_bit.byte |= buf;
 
-     txd_buf[3]=(UI08)(Tcoil_AD_value);
+    txd_buf[3] = (UI08)(Tcoil_AD_value);
 
-     //Ñ¹Ëõ»úÎÂ¶ÈAD
-     buf=(((Comp_AD_value>>8)&0x03)<<2);
-     buf_bit.byte|=buf;
-     txd_buf[4]=(UI08)(Comp_AD_value);
-     txd_buf[2] = buf_bit.byte;//
+    //Ñ¹Ëõ»úÎÂ¶ÈAD
+    buf = (((Comp_AD_value >> 8) & 0x03) << 2);
+    buf_bit.byte |= buf;
+    txd_buf[4] = (UI08)(Comp_AD_value);
+    txd_buf[2] = buf_bit.byte; //
 
-     //ÊÒÎÂ²ÉÑùÖµ
-     txd_buf[5]=(UI08)(data_process.SHT30_temperature>>8);//
-     txd_buf[6]=(UI08)(data_process.SHT30_temperature);//
-     //Êª¶ÈÖµ
-     txd_buf[7]=(data_process.SHT30_humidity)&0X7F;//
-     //ÎÂÊª¶È´«¸ÐÆ÷¹ÊÕÏ
-     if(SHT30_err_Status)
-     {
-        txd_buf[7]|=bit7;
-     }
-     //
-     txd_buf[8]=0;//¸ß°ËÎ»
-     txd_buf[9]=0;//µÍ°ËÎ»
-     txd_buf[txd_length-1]=crc_check(txd_buf,txd_length-1);
+    //ÊÒÎÂ²ÉÑùÖµ
+    txd_buf[5] = (UI08)(data_process.SHT30_temperature >> 8); //
+    txd_buf[6] = (UI08)(data_process.SHT30_temperature);      //
+    //Êª¶ÈÖµ
+    txd_buf[7] = (data_process.SHT30_humidity) & 0X7F; //
+    //ÎÂÊª¶È´«¸ÐÆ÷¹ÊÕÏ
+    if (SHT30_err_Status)
+    {
+        txd_buf[7] |= bit7;
+    }
+    //
+    txd_buf[8] = 0; //¸ß°ËÎ»
+    txd_buf[9] = 0; //µÍ°ËÎ»
+    txd_buf[txd_length - 1] = crc_check(txd_buf, txd_length - 1);
 }
 /*****************************************************************************
 //Ãû³Æ        : communication_rxd
@@ -193,23 +196,29 @@ void Txd_Data_Protocol(void)
 *****************************************************************************/
 void Communication_Rxd(void)
 {
-    UI08 sum=0;
-    if(!_Rxd_OK)
-    {return;}
-    _Rxd_OK=0;
+    UI08 sum = 0;
+    if (!_Rxd_OK)
+    {
+        return;
+    }
+    _Rxd_OK = 0;
     //
-    if(rxd_buf[0]!=0xaa)
-    {return;}
+    if (rxd_buf[0] != 0xaa)
+    {
+        return;
+    }
     //
-    sum=crc_check(rxd_buf,rece_data_lenth-1);
-    if(rxd_buf[rece_data_lenth-1]!=sum)
-    {return;}
+    sum = crc_check(rxd_buf, rece_data_lenth - 1);
+    if (rxd_buf[rece_data_lenth - 1] != sum)
+    {
+        return;
+    }
     //
     Rxd_Data_Protocl();
     //
-    Communication_Count_Timer=160;
+    Communication_Count_Timer = 160;
 
-    Communication_Delay_Txd_Timer=2;
+    Communication_Delay_Txd_Timer = 2;
 }
 /*****************************************************************************
 //Ãû³Æ        : communication_txd
@@ -222,17 +231,19 @@ void Communication_Rxd(void)
 void Communication_Txd(void)
 {
     //Ë¯Ãß×´Ì¬ÏÂ  ·¢ÉúË®ÂúÖ÷¶¯»½ÐÑË¯Ãß ¼ä¸ô200ms
-     if((Water_Status.IO_Status)&&(_Sleep_status_buf)&&(_1S_TXD_delay))
-     {
-         _txd_tick_en=1;
-	    _1S_TXD_delay=0;
-     }
+    if ((Water_Status.IO_Status) && (_Sleep_status_buf) && (_1S_TXD_delay))
+    {
+        _txd_tick_en = 1;
+        _1S_TXD_delay = 0;
+    }
 
-     //
+    //
 
-     if(!_txd_tick_en)
-     {return;}
-     _txd_tick_en=0;
+    if (!_txd_tick_en)
+    {
+        return;
+    }
+    _txd_tick_en = 0;
     //
 
     //==============================================================
@@ -241,11 +252,11 @@ void Communication_Txd(void)
     Txd_Data_Protocol();
     //==============================================================
 
-     _txd_data=0;
-     _txd_end=0;
-     pulse_cnt=0;
-     _txd_start=1;
-     _txd_en=1;
+    _txd_data = 0;
+    _txd_end = 0;
+    pulse_cnt = 0;
+    _txd_start = 1;
+    _txd_en = 1;
 }
 /*****************************************************************************
 //Ãû³Æ        : communication_Deal
@@ -257,10 +268,8 @@ void Communication_Txd(void)
 *****************************************************************************/
 void Communication_Deal(void)
 {
-      Prg_Communication_10mS();
-      Prg_Communication_1S();
-      Communication_Rxd();
-      Communication_Txd();
+    Prg_Communication_10mS();
+    Prg_Communication_1S();
+    Communication_Rxd();
+    Communication_Txd();
 }
-
-

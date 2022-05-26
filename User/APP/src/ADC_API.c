@@ -1,4 +1,4 @@
-#include "GCE_General.h"			//系统 通用调用文件
+#include "GCE_General.h" //系统 通用调用文件
 
 /*************************************************
  // 函数名称    : void ADC_deal(void)
@@ -9,6 +9,4 @@
 void ADC_deal(void)
 {
     ADC_Sample();
-
 }
-

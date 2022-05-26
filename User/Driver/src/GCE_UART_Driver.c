@@ -4,15 +4,14 @@
 全局变量定义区
 ************************************************/
 
+#if (GCE_UART0_EN)
 
-#if(GCE_UART0_EN)
+// GCE_XDATA  UI08           M_TestData[10]={1,2,3,4,5,6,7,8,9,10};
+GCE_XDATA UI08 Uart0_rxd_delay = 0;
 
-//GCE_XDATA  UI08           M_TestData[10]={1,2,3,4,5,6,7,8,9,10};
-GCE_XDATA  UI08           Uart0_rxd_delay=0;
-
-GCE_XDATA  UUI08          Uart0_Flag={0};///UART标志位
-GCE_XDATA  UI08           UART0_RX_Err_Delay=0;//UART0通信故障
-GCE_XDATA  TS_UART_TYPE   GCE_Uart0;
+GCE_XDATA UUI08 Uart0_Flag = {0};	   /// UART标志位
+GCE_XDATA UI08 UART0_RX_Err_Delay = 0; // UART0通信故障
+GCE_XDATA TS_UART_TYPE GCE_Uart0;
 /*************************************************
 //名称        :UART0_RX_IT//中断调用
 //功能        :发送中断子程序
@@ -24,10 +23,10 @@ GCE_XDATA  TS_UART_TYPE   GCE_Uart0;
 //审核日期    :2021.6.3
 //修改记录    :2021.6.3  V0.0初版发布
 ************************************************/
-void UART0_RX_IT(UI08 _uart0rxdata)//中断调用
+void UART0_RX_IT(UI08 _uart0rxdata) //中断调用
 {
-	UI08 buf	;
-	buf=_uart0rxdata;
+	UI08 buf;
+	buf = _uart0rxdata;
 }
 /*************************************************
 //名称        :Uart0Send_IT//中断调用
@@ -40,14 +39,14 @@ void UART0_RX_IT(UI08 _uart0rxdata)//中断调用
 //审核日期    :2021.6.3
 //修改记录    :2021.6.3  V0.0初版发布
 ************************************************/
-void Uart0Send_IT(UI08 *_pbuf, UI08 _len)//中断调用
+void Uart0Send_IT(UI08 *_pbuf, UI08 _len) //中断调用
 {
-	if((GCE_Uart0.Len == 0) && (_pbuf != 0)) // 正在发送数据或指针无效时,不允许重新赋值.
+	if ((GCE_Uart0.Len == 0) && (_pbuf != 0)) // 正在发送数据或指针无效时,不允许重新赋值.
 	{
-	    GCE_Uart0.pTxBuf = _pbuf;
-	    GCE_Uart0.Len = _len;
-	    UART_IE |= bit1;
-        }
+		GCE_Uart0.pTxBuf = _pbuf;
+		GCE_Uart0.Len = _len;
+		UART_IE |= bit1;
+	}
 }
 
 /*************************************************
@@ -64,23 +63,23 @@ void Uart0Send_IT(UI08 *_pbuf, UI08 _len)//中断调用
 /*
 void prg_S_uart0(void)
 {
-    if(!_1S_for_uart0)
-    {return;}
-    _1S_for_uart0=0;
+	if(!_1S_for_uart0)
+	{return;}
+	_1S_for_uart0=0;
 
-    Uart0Send_IT(M_TestData,sizeof(M_TestData));
-    if(UART0_RX_Err_Delay>0)
-    {
-    	--UART0_RX_Err_Delay;
-    	if(UART0_RX_Err_Delay==0)
-    	{
+	Uart0Send_IT(M_TestData,sizeof(M_TestData));
+	if(UART0_RX_Err_Delay>0)
+	{
+		--UART0_RX_Err_Delay;
+		if(UART0_RX_Err_Delay==0)
+		{
 	   uart0_RX_Err=TRUE;
 	}
 	else
 	{
 	   uart0_RX_Err=FALSE;
 	}
-    }
+	}
 }
 */
 /*************************************************
@@ -97,15 +96,15 @@ void prg_S_uart0(void)
 /*
 void Deal_Uart0(void)
 {
-    prg_S_uart0();
+	prg_S_uart0();
 }
 */
-#endif////GCE_UART0_EN
+#endif ////GCE_UART0_EN
 ////////////////////////////////////////////////////////////////////////////
-#if(GCE_UART1_EN)
-GCE_XDATA  UI08 M_TestData1[10]={1,2,3,4,5,6,7,8,9,10};
-GCE_XDATA UUI08 Uart1_Flag={0};///UART1标志位
-GCE_XDATA UI08  UART1_RX_Err_Delay=0;//UART1通信故障
+#if (GCE_UART1_EN)
+GCE_XDATA UI08 M_TestData1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+GCE_XDATA UUI08 Uart1_Flag = {0};	   /// UART1标志位
+GCE_XDATA UI08 UART1_RX_Err_Delay = 0; // UART1通信故障
 GCE_XDATA TS_UART_TYPE GCE_Uart1;
 /*************************************************
 //名称        :UART1_RX_IT//中断调用
@@ -118,9 +117,9 @@ GCE_XDATA TS_UART_TYPE GCE_Uart1;
 //审核日期    :2021.6.3
 //修改记录    :2021.6.3  V0.0初版发布
 ************************************************/
-void UART1_RX_IT(UI08 _uart1rxdata)//中断调用
+void UART1_RX_IT(UI08 _uart1rxdata) //中断调用
 {
-	 _uart1rxdata=0;
+	_uart1rxdata = 0;
 }
 /*************************************************
 //名称        :Uart1Send_IT//中断调用
@@ -133,14 +132,14 @@ void UART1_RX_IT(UI08 _uart1rxdata)//中断调用
 //审核日期    :2021.6.3
 //修改记录    :2021.6.3  V0.0初版发布
 ************************************************/
-void Uart1Send_IT(UI08 *_pbuf, UI08 _len)//中断调用
+void Uart1Send_IT(UI08 *_pbuf, UI08 _len) //中断调用
 {
-	if((GCE_Uart1.Len == 0) && (_pbuf != 0)) // 正在发送数据或指针无效时,不允许重新赋值.
+	if ((GCE_Uart1.Len == 0) && (_pbuf != 0)) // 正在发送数据或指针无效时,不允许重新赋值.
 	{
-	    GCE_Uart1.pTxBuf = _pbuf;
-	    GCE_Uart1.Len = _len;
-	    UART_IE |= bit3;
-        }
+		GCE_Uart1.pTxBuf = _pbuf;
+		GCE_Uart1.Len = _len;
+		UART_IE |= bit3;
+	}
 }
 /*****************************************************************************
 /*************************************************
@@ -156,23 +155,25 @@ void Uart1Send_IT(UI08 *_pbuf, UI08 _len)//中断调用
 ************************************************/
 void prg_S_uart1(void)
 {
-    if(!_1S_for_uart1)
-    {return;}
-    _1S_for_uart1=0;
-	Uart1Send_IT(M_TestData1,sizeof(M_TestData1));
-
-    if(UART1_RX_Err_Delay>0)
-    {
-    	--UART1_RX_Err_Delay;
-    	if(UART1_RX_Err_Delay==0)
-    	{
-	   uart1_RX_Err=TRUE;
-	}
-	else
+	if (!_1S_for_uart1)
 	{
-	   uart1_RX_Err=FALSE;
+		return;
 	}
-    }
+	_1S_for_uart1 = 0;
+	Uart1Send_IT(M_TestData1, sizeof(M_TestData1));
+
+	if (UART1_RX_Err_Delay > 0)
+	{
+		--UART1_RX_Err_Delay;
+		if (UART1_RX_Err_Delay == 0)
+		{
+			uart1_RX_Err = TRUE;
+		}
+		else
+		{
+			uart1_RX_Err = FALSE;
+		}
+	}
 }
 /*************************************************
 //名称        :Deal_Uart1
@@ -187,9 +188,7 @@ void prg_S_uart1(void)
 ************************************************/
 void Deal_Uart1(void)
 {
-    prg_S_uart1();
+	prg_S_uart1();
 }
 
-#endif////GCE_UART1_EN
-
-
+#endif ////GCE_UART1_EN

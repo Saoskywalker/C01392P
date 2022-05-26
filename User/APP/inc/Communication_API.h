@@ -10,7 +10,7 @@
 #ifndef _COMMUNICATION_API_H
 #define _COMMUNICATION_API_H
 
-extern GCE_XDATA UI08   Communication_Count_Timer;//通信故障报警
+extern GCE_XDATA UI08 Communication_Count_Timer; //通信故障报警
 
 extern void Communication_Deal(void);
 
@@ -24,14 +24,7 @@ extern void Communication_Deal(void);
 //   eeeeeeeeee       nn     n    nn      dd         dd
 //  ee               nn       n  nn      dd         dd
 // ee               nn         nnn      dd         dd
-//eeeeeeeeee       nn          nn      ddddddddddd
+// eeeeeeeeee       nn          nn      ddddddddddd
 //
-//Designed by Benkye.Zhang 2010.10.28
+// Designed by Benkye.Zhang 2010.10.28
 ///////////////////////////////////////////////////////
-
-
-
-
-
-
-

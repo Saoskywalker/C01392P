@@ -1,0 +1,20 @@
+".\main.obj",
+".\GCE_System_Time.obj",
+".\ADC_API.obj",
+".\EXV_API.obj",
+".\Motor_API.obj",
+".\IO_API.obj",
+".\General_Func.obj",
+".\Communication_API.obj",
+".\SHT30_I2C.obj",
+".\GCE_EXT_Driver.obj",
+".\GCE_Timer_Driver.obj",
+".\GCE_ADC_Driver.obj",
+".\EXV_driver.obj",
+".\Communication_Driver.obj",
+".\GCE_UART_Driver.obj",
+".\GCE_MCU_Init.obj",
+".\GCE_MCU_Interrupt.obj",
+"STARTUP_F03.obj" 
+TO "S1392P_R00" 
+RAMSIZE(256) 

@@ -1,0 +1,15 @@
+*/*.lst
+*/*.obj
+/out
+/*.bak
+*/*.htm
+*/*.uvgui.*
+/*.plg
+/*.iex
+/.vscode
+*/*.uvopt
+*/*.uvproj
+/debug
+/source insight
+*.code-workspace
+*.hrccproj

@@ -20,10 +20,10 @@
 #if (GCE_ADC_EN)
 
 extern UI08 ADC_Channel[ADC_USE_CHANNEL_TOTAL];
-extern GCE_XDATA UI16 AD_value_lit[2];
-extern GCE_XDATA UI08 ADC_channel_ptr; //Õ®µ¿÷∏’Î
+extern GCE_XDATA UI16 AD_value_lit[ADC_USE_CHANNEL_TOTAL];
 
 extern void ADC_Sample(void);
+extern void Hum_driver(void);
 
 #endif ////GCE_ADC_EN
 

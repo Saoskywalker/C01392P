@@ -19,8 +19,15 @@
 
 #define Tcoil_AD_value AD_value_lit[0]
 #define Comp_AD_value AD_value_lit[1]
+#define Troom_AD_value AD_value_lit[2]
+#define Hum_AD_value AD_value_lit[3]
+
+extern ADC_PARA Hum_para, Temp_room_para, Temp_comp_para, Temp_coil_para;
+extern UI16 Temp_C_room_digit_value;
 
 extern void ADC_deal(void);
+void room_temp_deal(void);
+void hum_deal(void);
 
 #endif /* __ADC_API_H */
 

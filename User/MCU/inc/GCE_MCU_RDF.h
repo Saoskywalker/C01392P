@@ -30,14 +30,14 @@
 #define GCE_ADC_SET_CH(ch)            ADC_C0 = bit7|ch  ///启用ADC设置通道//设置通道
 #define GCE_GET_ADC_VALUE            ((UI16)(ADC_DH << 8) | ADC_DL)// 获取ADC值
 //ADC---------------------------------
-#define ADC_USE_CHANNEL_TOTAL  2 //使用到的所有ADC通道数量
+#define ADC_USE_CHANNEL_TOTAL  4 //使用到的所有ADC通道数量
 
 //#define TOIL_ADC_channel ADC_NUM_AN0        //通道0   未使用
 //#define ADCNUM_NOTUSE ADC_NUM_AN1        //通道1   未使用
 //#define TOIL_ADC_channel ADC_NUM_AN2        //通道2   未使用
 //#define COMP_ADC_channel ADC_NUM_AN3        //通道3   未使用
-//#define Troom_ADC_channel ADC_NUM_AN4       //通道4  室温
-//#define Tcoil_ADC_channel ADC_NUM_AN5       //通道5   管温
+#define Troom_ADC_channel ADC_NUM_AN4       //通道4  室温
+#define HUM_ADC_channel ADC_NUM_AN5       //通道5   管温
 #define COMP_ADC_channel ADC_NUM_AN6        //通道6   未使用
 //#define ADCNUM_NOTUSE ADC_NUM_AN7        //通道7   未使用
 //#define COMP_ADC_channel ADC_NUM_AN8        //1/4VDD  未使用
@@ -45,8 +45,8 @@
 #define TOIL_ADC_channel ADC_NUM_AN10       //通道10  未使用
 //#define ADCNUM_NOTUSE ADC_NUM_AN11       ////固定选择内部1/4VDD 通道//未使用
 
-#define ADC_USE_CHANNEL_TAB     TOIL_ADC_channel,COMP_ADC_channel   //此处将所用到的通道复制粘贴到此
-#define ADC_USE_CHANNEL_FIRST   TOIL_ADC_channel
+#define ADC_USE_CHANNEL_TAB     TOIL_ADC_channel,COMP_ADC_channel,Troom_ADC_channel,HUM_ADC_channel   //此处将所用到的通道复制粘贴到此
+#define ADC_USE_CHANNEL_FIRST   TOIL_ADC_channel //首次启动ADC采样通道
 //==========================================================================================
 //ADC定义部分START
 //总共12通道12位SAR ADC，其中1路通道用亍VDD 检测，
@@ -122,6 +122,11 @@
 #define Scl         (P3_2)  //HUM2 或者 HUM_AD
 ////
 
+#define HUM1_L P3_1 = 0
+#define HUM1_H P3_1 = 1
+#define HUM2_L P3_2 = 0
+#define HUM2_H P3_2 = 1
+
 #define  WATER_IO      (P0_2)  //水满开关IO
 
 #define  Filt_IO       (P2_4)      //滤网接入开关IO
@@ -131,7 +136,7 @@
 #define  Motor_POWER_OFF      P3_7=0
 #define  Motor_POWER_ON       P3_7=1
 
-#define  Motor_CW_EN          P2_2=0
+#define  Motor_CW_EN          P2_2=0 //电机正反转控制
 #define  Motor_CCW_EN         P2_2=1
 #define  PWM_DUTY_Set(duty)   USER_PWM01_DUTY(duty)
 //

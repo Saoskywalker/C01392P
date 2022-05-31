@@ -7,11 +7,28 @@
 #if (GCE_UART0_EN)
 
 // GCE_XDATA  UI08           M_TestData[10]={1,2,3,4,5,6,7,8,9,10};
-GCE_XDATA UI08 Uart0_rxd_delay = 0;
 
 GCE_XDATA UUI08 Uart0_Flag = {0};	   /// UART标志位
 GCE_XDATA UI08 UART0_RX_Err_Delay = 0; // UART0通信故障
 GCE_XDATA TS_UART_TYPE GCE_Uart0;
+
+/*************************************************
+//名称        :Uart0_rxd_delay(定时调用)
+//功能        :接收延时
+************************************************/
+static GCE_XDATA UI08 _rxd_delay = 0;
+void Uart0_rxd_delay(UI08 _uart0rxdata)
+{
+	if (_rxd_delay > 0)
+	{
+		_rxd_delay--;
+		if (_rxd_delay == 0)
+		{
+			Uart0_Rxd_Ok = 1;
+		}
+	}
+}
+
 /*************************************************
 //名称        :UART0_RX_IT//中断调用
 //功能        :发送中断子程序

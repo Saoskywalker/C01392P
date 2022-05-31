@@ -23,7 +23,6 @@ extern GCE_XDATA UUI08 SYS_bit; //系统标志位
 extern GCE_XDATA UUI08 SYS_bit1; //系统标志位
 #define _10ms_MOTER_CHECK_EN SYS_bit1.bit_.b0
 #define _txd_tick_en SYS_bit1.bit_.b1
-//#define  _ADC_end                 SYS_bit1.bit_.b2
 #define _Sleep_status_buf SYS_bit1.bit_.b3
 #define _Sleep_status SYS_bit1.bit_.b4
 #define _water_full_Status_buf SYS_bit1.bit_.b5

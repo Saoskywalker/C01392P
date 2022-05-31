@@ -570,20 +570,13 @@ typedef enum
     AI_CUT = (UI08)2
 } AISTATUS;
 
-typedef struct AD
+typedef struct
 {
     UI08 value_F;
-    UI16 value_C;
-    UI16 AD_value;
-    AISTATUS status;
-} ADC_PARA;
-
-typedef struct AD_HUM
-{
     UI08 value;
     UI16 AD_value;
     AISTATUS status;
-} ADC_PARA_HUM;
+} ADC_PARA;
 
 typedef enum
 {

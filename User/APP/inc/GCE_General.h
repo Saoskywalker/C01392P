@@ -23,7 +23,7 @@
 #include "GCE_MCU_RDF.h"     // SFR重定义文件
 #include "GCE_MCU_Init.h"    // MCU初始化外设接口头文件
 
-#include "GCE_UART_Driver.h"  //UART外设接口头文件
+// #include "GCE_UART_Driver.h"  //UART外设接口头文件
 #include "GCE_Timer_Driver.h" //定时器中断外设接口头文件
 
 #include "GCE_EXT_Driver.h" //外中断外设接口头文件
@@ -43,7 +43,7 @@
 
 #include "General_Func.h"
 
-#include "SHT30_I2C.h"
+// #include "SHT30_I2C.h"
 
 #define Version 0
 

@@ -59,6 +59,37 @@ void prg_s_motor(void)
 }
 
 /*************************************************
+//名称        :	FAN_PWM_Set
+//功能        :
+//入口参数    :	待输出占空比值
+//出口参数    :	无
+//构	建: 	GCE
+//修	改: 	GCE XXX
+************************************************/
+void FAN_PWM_Set(UI16 i)
+{
+    UI32 pwm_buf = 0;
+
+    pwm_buf = PWM0_PERIOD_VALUE;
+    pwm_buf = pwm_buf * i / 200;
+    if (pwm_buf > PWM0_PERIOD_VALUE)
+    {
+        pwm_buf = PWM0_PERIOD_VALUE;
+    }
+
+    if (pwm_buf == 0)
+    {
+        P33_FUN_IO; //配置为普通IO
+        P33_CLR;
+    }
+    else
+    {
+        P33_FUN_PWM01; //复用成PWM端口
+    }
+    PWM_DUTY_Set(pwm_buf);
+}
+
+/*************************************************
 //名称        :	FAN_PWM_deal
 //功能        :
 //入口参数    :	无
@@ -106,23 +137,8 @@ void FAN_PWM_deal(void)
         }
     }
 
-    pwm_buf = PWM0_PERIOD_VALUE;
-    pwm_buf = pwm_buf * Fan_PWM_buf / 200;
-    if (pwm_buf > PWM0_PERIOD_VALUE)
-    {
-        pwm_buf = PWM0_PERIOD_VALUE;
-    }
+    FAN_PWM_Set(Fan_PWM_buf);
 
-    if (pwm_buf == 0)
-    {
-        P33_FUN_IO; //配置为普通IO
-        P33_CLR;
-    }
-    else
-    {
-        P33_FUN_PWM01; //复用成PWM端口
-    }
-    PWM_DUTY_Set(pwm_buf);
 #if 0
   Motor_CW_EN;
   Motor_POWER_ON;

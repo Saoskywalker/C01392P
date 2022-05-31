@@ -21,6 +21,34 @@ void delay(UI16 i)
     while (i--)
         ;
 }
+
+void AppInit(void)
+{
+    Tcoil_AD_value = 512;
+    Temp_coil_para.AD_value = 512;
+    Temp_coil_para.status = AI_NORMAL;
+    Temp_coil_para.value = 40;
+    Temp_coil_para.value_F = 77;
+
+    Comp_AD_value = 512;
+    Temp_comp_para.AD_value = 512;
+    Temp_comp_para.status = AI_NORMAL;
+    Temp_comp_para.value = 40;
+    Temp_comp_para.value_F = 77;
+
+    Troom_AD_value = 512;
+    Temp_C_room_digit_value = 26215;
+    Temp_room_para.AD_value = 256;
+    Temp_room_para.status = AI_NORMAL;
+    Temp_room_para.value = 40;
+    Temp_room_para.value_F = 77;
+
+    Hum_AD_value = 512;
+    Hum_para.AD_value = 512;
+    Hum_para.status = AI_NORMAL;
+    Hum_para.value = 60;
+}
+
 // UI08 pwer_delay_time = 3;
 void main(void)
 {
@@ -28,7 +56,7 @@ void main(void)
     MCU_Initial(); // MCU初始化
     //_TEST_INIT_TIME;
 
-    Sys_Off();
+    AppInit();
     Comm_input_init;
     /* while(pwer_delay_time > 0)
      {
@@ -43,7 +71,6 @@ void main(void)
     {                 //无操作时，10s后自动进入低功耗模式，程序处理在中断里，查看lp_mode设置为1
         GCE_CLRWDT(); //清WDT, reset system
         ADC_deal();
-        Sht30_Deal();
         EXV_Control();
         Motor_deal();
         Communication_Deal();
@@ -52,8 +79,9 @@ void main(void)
 
         if (_Sleep_status)
         {
-
+            GCE_Timer0_Disable(); //关定时器
             delay(20);
+            Sys_Off(); //关输出
 
             GCE_CLRWDT(); //清WDT,
 
@@ -61,6 +89,7 @@ void main(void)
 
             //_Sleep_status = 0;
             M_Sleep_Delay_Time = 5;
+            GCE_Timer0_Enable(); //开定时器
         }
         Sleep_deal();
     }

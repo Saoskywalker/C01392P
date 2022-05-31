@@ -141,8 +141,13 @@ void DO_output(void)
 ************************************************/
 void Sys_Off(void)
 {
-    COMP_OFF;
+    FAN_PWM_Set(0);
     Motor_POWER_OFF;
+    Motor_CCW_EN;
+    Txd_H;
+    HUM1_L;
+    HUM2_L;
+    COMP_OFF;
     UVC_OFF;
     EXV_UD_Out(0X00);
     //  EXV_LR_Out(0X00);

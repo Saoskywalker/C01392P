@@ -4,6 +4,24 @@
 UI08 mS_Count = 0;
 #if (GCE_TIMER0_IT_EN)
 /*************************************************
+//名称        :GCE_Timer0_Enable
+//功能        :关定时器定时器0
+************************************************/
+void GCE_Timer0_Enable(void)
+{
+    TMR0_EN;
+}
+
+/*************************************************
+//名称        :GCE_Timer0_Disable
+//功能        :关定时器定时器0
+************************************************/
+void GCE_Timer0_Disable(void)
+{
+    TMR0_DIS;
+}
+
+/*************************************************
 //名称        :GCE_Timer0_IT
 //功能        :定时器0中断处理函数
 //入口参数    :无
@@ -27,18 +45,13 @@ void GCE_Timer0_IT(void) //中断调用
         Communication_Txd_IRQ();
     }
 
+    Hum_driver();
+
     mS_Count++;
     if (mS_Count >= 8)
     {
         mS_Count = 0;
-        if (Uart0_rxd_delay > 0)
-        {
-            Uart0_rxd_delay--;
-            if (Uart0_rxd_delay == 0)
-            {
-                Uart0_Rxd_Ok = 1;
-            }
-        }
+
 
         EXV_UD_run();
     }

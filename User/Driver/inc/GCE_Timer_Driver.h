@@ -18,6 +18,8 @@
 #if (GCE_TIMER0_IT_EN)
 
 extern void GCE_Timer0_IT(void);
+void GCE_Timer0_Enable(void);
+void GCE_Timer0_Disable(void);
 
 #endif // GCE_TIMER0_IT_EN
 #endif /* __GCE_TIMER0_DRIVER_H */

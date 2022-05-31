@@ -172,12 +172,12 @@ void Txd_Data_Protocol(void)
     txd_buf[2] = buf_bit.byte; //
 
     //室温采样值
-    txd_buf[5] = (UI08)(data_process.SHT30_temperature >> 8); //
-    txd_buf[6] = (UI08)(data_process.SHT30_temperature);      //
+    txd_buf[5] = (UI08)(Temp_C_room_digit_value >> 8); //使用CORA0-1392H传感器使用的公式的值, 度C
+    txd_buf[6] = (UI08)(Temp_C_room_digit_value);
     //湿度值
-    txd_buf[7] = (data_process.SHT30_humidity) & 0X7F; //
+    txd_buf[7] = (Hum_para.value) & 0X7F; //
     //温湿度传感器故障
-    if (SHT30_err_Status)
+    if (Hum_para.status != AI_NORMAL)
     {
         txd_buf[7] |= bit7;
     }

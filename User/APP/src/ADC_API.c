@@ -192,12 +192,14 @@ void room_temp_deal(void)
         Temp_room_para.status = AI_CUT;
         Temp_room_para.value_F = 0;
         Temp_room_para.value = 0;
+        Temp_C_room_digit_value = 0;
     }
     else if (Temp_room_para.AD_value > 500)
     {
         Temp_room_para.status = AI_SHORT;
         Temp_room_para.value_F = 0;
         Temp_room_para.value = 0;
+        Temp_C_room_digit_value = 0;
     }
     else
     {
@@ -220,7 +222,7 @@ void hum_deal(void)
     UI08 temp_room_buf = 0;
 
     Hum_para.AD_value = Hum_AD_value;
-    if (Hum_para.AD_value > 1015) //只判短路
+    if (Hum_para.AD_value > 1010 || Temp_room_para.status != AI_NORMAL) //只判短路
     {
         Hum_para.status = AI_SHORT;
         Hum_para.value = 99;

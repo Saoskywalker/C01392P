@@ -198,6 +198,8 @@ void Motor_deal(void)
         return;
     }
     _100ms_for_Motor = 0;
+    if (!_Power_Status)
+        Fan_PWM = 0;
     Motor_Power_Deal();
     FAN_PWM_deal();
 }

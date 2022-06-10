@@ -111,6 +111,12 @@ void DI_read(void)
 **************************************************/
 void DO_output(void)
 {
+    if(!_Power_Status)
+    {
+        _COMP_Status = 0;
+        _UVC_Status = 0;
+    }
+
     if (_COMP_Status)
     {
         COMP_ON;

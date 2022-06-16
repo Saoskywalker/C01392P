@@ -227,6 +227,11 @@ void hum_deal(void)
         Hum_para.status = AI_SHORT;
         Hum_para.value = 99;
     }
+    else if (Hum_para.AD_value < 4 && Temp_room_para.value >= 15 + 15) //Ö»ÅÐ¿ªÂ·
+    {
+        Hum_para.status = AI_CUT;
+        Hum_para.value = 0;
+    }
     else
     {
         Hum_para.status = AI_NORMAL;

@@ -220,35 +220,51 @@ void room_temp_deal(void)
 void hum_deal(void)
 {
     UI08 temp_room_buf = 0;
+    static UI08 count = 0;
 
     Hum_para.AD_value = Hum_AD_value;
-    if (Hum_para.AD_value > 1010 || Temp_room_para.status != AI_NORMAL) //只判短路
+    if (Hum_para.AD_value > 1010) //只判短路
     {
-        Hum_para.status = AI_SHORT;
-        Hum_para.value = 99;
+        if (++count >= 3)
+        {
+            count = 3;
+            Hum_para.status = AI_SHORT;
+            Hum_para.value = 99;
+        }
     }
-    else if (Hum_para.AD_value < 4 && Temp_room_para.value >= 15 + 15) //只判开路
+    else if (Hum_para.AD_value < 5 && Temp_room_para.value >= 15 + 15) //只判开路, 因AD开路采集不稳, 故AD由4改为5
     {
-        Hum_para.status = AI_CUT;
-        Hum_para.value = 0;
+        if (++count >= 3)
+        {
+            count = 3;
+            Hum_para.status = AI_CUT;
+            Hum_para.value = 0;
+        }
     }
     else
     {
-        Hum_para.status = AI_NORMAL;
-        //hum_tab表温度从5~45C, 共41个温度
-        if (Temp_room_para.value <= 5 + 15)
+        if (count > 0)
         {
-            temp_room_buf = 0;
-        }
-        else if (Temp_room_para.value >= 45 + 15)
-        {
-            temp_room_buf = 40;
+            count--;
         }
         else
         {
-            temp_room_buf = Temp_room_para.value - 15 - 5;
+            Hum_para.status = AI_NORMAL;
+            // hum_tab表温度从5~45C, 共41个温度
+            if (Temp_room_para.value <= 5 + 15)
+            {
+                temp_room_buf = 0;
+            }
+            else if (Temp_room_para.value >= 45 + 15)
+            {
+                temp_room_buf = 40;
+            }
+            else
+            {
+                temp_room_buf = Temp_room_para.value - 15 - 5;
+            }
+            Hum_para.value = (UI08)(ADC_lookup(Hum_para.AD_value, hum_tab[temp_room_buf], 71) + 20);
         }
-        Hum_para.value = (UI08)(ADC_lookup(Hum_para.AD_value, hum_tab[temp_room_buf], 71) + 20);
     }
 }
 

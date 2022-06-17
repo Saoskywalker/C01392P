@@ -223,7 +223,7 @@ void hum_deal(void)
     static UI08 count = 0;
 
     Hum_para.AD_value = Hum_AD_value;
-    if (Hum_para.AD_value > 1010) //只判短路
+    if (Hum_para.AD_value > 1006) //只判短路
     {
         if (++count >= 3)
         {
@@ -232,7 +232,7 @@ void hum_deal(void)
             Hum_para.value = 99;
         }
     }
-    else if (Hum_para.AD_value < 5 && Temp_room_para.value >= 15 + 15) //只判开路, 因AD开路采集不稳, 故AD由4改为5
+    else if (Hum_para.AD_value < 8 && Temp_room_para.value >= 15 + 15) //只判开路, 因AD开路采集不稳, 故AD由4改为5
     {
         if (++count >= 3)
         {
